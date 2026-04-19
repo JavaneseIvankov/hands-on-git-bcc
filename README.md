@@ -1,6 +1,6 @@
 # 🛠️ Hands-On: Website Portofolio Tim
 
-**Skenario:** Kamu dan rekanmu (sebut saja "Yuswanto") sedang membangun website portofolio tim bersama. Kamu mengerjakan halaman utama dan blog, sementara Yuswanto mengerjakan halaman tim dan galeri. Di tengah jalan kalian akan mengalami konflik dan harus menyelesaikannya bersama.
+**Skenario:** Kamu dan rekanmu (sebut saja "Rina") sedang membangun website portofolio tim bersama. Kamu mengerjakan halaman utama dan blog, sementara Rina mengerjakan halaman tim dan galeri. Di tengah jalan kalian akan mengalami konflik dan harus menyelesaikannya bersama.
 
 ---
 
@@ -202,7 +202,119 @@
 
 ---
 
-## Skenario 5: Git Reset
+## Skenario 5: Git Stash — Simpan Pekerjaan Sementara
+
+Setelah merge branch blog, kamu mulai mengerjakan halaman `pages/faq.html` di `master`. Kamu sudah menulis setengah konten, tapi tiba-tiba Rina menghubungi dan meminta kamu untuk cepat mengecek sesuatu di branch `feature/blog` yang sudah di-merge tadi. Pekerjaan `faq.html` belum layak di-commit, tapi kamu juga tidak mau kehilangan progress yang sudah ada.
+
+Di sinilah `git stash` berguna.
+
+1. Buat dan isi `pages/faq.html` — tapi baru setengah jadi, belum siap di-commit:
+   ```html
+   <html>
+     <head>
+       <title>FAQ</title>
+     </head>
+     <body>
+       <h1>Pertanyaan Umum</h1>
+       <div>
+         <h2>Apa itu portofolio tim?</h2>
+         <p>Portofolio tim adalah kumpulan karya...</p>
+       </div>
+       <!-- masih banyak yang belum selesai -->
+     </body>
+   </html>
+   ```
+
+2. Cek status — Git tahu ada perubahan yang belum di-commit:
+   ```bash
+   git status
+   ```
+   Output:
+   ```
+   On branch master
+   Untracked files:
+     pages/faq.html
+   ```
+
+3. Simpan pekerjaan sementara ke stash:
+   ```bash
+   git stash -u
+   ```
+
+   > Flag `-u` (atau `--include-untracked`) diperlukan agar file baru yang belum pernah di-`add` sebelumnya ikut tersimpan ke stash. Tanpa flag ini, file untracked seperti `faq.html` akan diabaikan oleh stash.
+
+4. Cek status sekarang — working directory bersih:
+   ```bash
+   git status
+   ```
+   Output:
+   ```
+   On branch master
+   nothing to commit, working tree clean
+   ```
+
+5. Cek isi stash:
+   ```bash
+   git stash list
+   ```
+   Output:
+   ```
+   stash@{0}: WIP on master: a1b2c3d feat(nav): add full navigation links to homepage
+   ```
+
+6. Sekarang kamu bisa pindah branch dengan aman untuk mengecek sesuatu:
+   ```bash
+   git checkout feature/blog
+   # ... cek apa yang diminta Rina ...
+   git checkout master
+   ```
+
+7. Setelah selesai, ambil kembali pekerjaan yang tadi disimpan:
+   ```bash
+   git stash pop
+   ```
+
+   `git stash pop` mengambil stash terakhir dan sekaligus menghapusnya dari daftar stash. Jika ingin mengambil tanpa menghapus dari daftar, gunakan `git stash apply`.
+
+8. Cek status — `faq.html` kembali ada:
+   ```bash
+   git status
+   ```
+   Output:
+   ```
+   On branch master
+   Untracked files:
+     pages/faq.html
+   ```
+
+9. Lanjutkan mengisi `faq.html` hingga selesai:
+   ```html
+   <html>
+     <head>
+       <title>FAQ</title>
+     </head>
+     <body>
+       <h1>Pertanyaan Umum</h1>
+       <div>
+         <h2>Apa itu portofolio tim?</h2>
+         <p>Portofolio tim adalah kumpulan karya dan proyek yang pernah dikerjakan bersama.</p>
+       </div>
+       <div>
+         <h2>Bagaimana cara bergabung?</h2>
+         <p>Hubungi kami melalui halaman kontak untuk informasi lebih lanjut.</p>
+       </div>
+     </body>
+   </html>
+   ```
+
+   ```bash
+   git add pages/faq.html
+   git commit -m "feat(faq): add FAQ page with common questions"
+   ```
+
+---
+
+## Skenario 6: Git Reset  
 
 1. Ternyata kamu sadar bahwa deskripsi di `team.html` terlalu umum dan belum sesuai dengan yang diinginkan tim. Kamu ingin kembali ke kondisi sebelum commit tersebut.
 
@@ -243,7 +355,7 @@
          <p>Spesialisasi di React dan Tailwind CSS.</p>
        </div>
        <div>
-         <h2>Yuswanto — UI/UX Designer</h2>
+         <h2>Rina — UI/UX Designer</h2>
          <p>Spesialisasi di Figma dan desain sistem.</p>
        </div>
      </body>
@@ -257,7 +369,7 @@
 
 ---
 
-## Skenario 6: Remote Repository
+## Skenario 7: Remote Repository
 
 1. Hubungkan repo lokal ke GitHub:
    ```bash
@@ -265,14 +377,14 @@
    git push -u origin master
    ```
 
-2. Yuswanto meng-clone repo dan membuat branch untuk mengerjakan halaman galeri:
+2. Rina meng-clone repo dan membuat branch untuk mengerjakan halaman galeri:
    ```bash
    git clone <url-repo-kamu>
    cd portfolio-tim
    git checkout -b feature/gallery
    ```
 
-3. Yuswanto membuat file `pages/gallery.html` dan melakukan commit lalu push:
+3. Rina membuat file `pages/gallery.html` dan melakukan commit lalu push:
    ```html
    <html>
      <head>
@@ -298,13 +410,13 @@
    git push origin feature/gallery
    ```
 
-4. Yuswanto membuat Pull Request di GitHub dengan judul: `feat: add gallery page`.
+4. Rina membuat Pull Request di GitHub dengan judul: `feat: add gallery page`.
 
 ---
 
-## Skenario 7: Kamu Menambahkan Fitur Baru di Master
+## Skenario 8: Kamu Menambahkan Fitur Baru di Master
 
-Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`.
+Sementara menunggu PR Rina di-review, kamu melanjutkan pekerjaan di `master`.
 
 1. Tambahkan halaman `pages/contact.html`:
    ```html
@@ -338,7 +450,7 @@ Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`
          <p>Spesialisasi di React dan Tailwind CSS.</p>
        </div>
        <div>
-         <h2>Yuswanto — UI/UX Designer</h2>
+         <h2>Rina — UI/UX Designer</h2>
          <p>Spesialisasi di Figma dan desain sistem.</p>
        </div>
        <div>
@@ -357,9 +469,9 @@ Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`
 
 ---
 
-## Skenario 8: Konflik — Yuswanto Juga Edit team.html
+## Skenario 9: Konflik — Rina Juga Edit team.html
 
-Ternyata di branch `feature/gallery`, Yuswanto juga mengedit `pages/team.html` untuk memperbarui deskripsinya sendiri dengan versi yang berbeda:
+Ternyata di branch `feature/gallery`, Rina juga mengedit `pages/team.html` untuk memperbarui deskripsinya sendiri dengan versi yang berbeda:
 
 ```html
 <html>
@@ -373,7 +485,7 @@ Ternyata di branch `feature/gallery`, Yuswanto juga mengedit `pages/team.html` u
       <p>Spesialisasi di React dan Tailwind CSS.</p>
     </div>
     <div>
-      <h2>Yuswanto — UI/UX Designer</h2>
+      <h2>Rina — UI/UX Designer</h2>
       <p>Berpengalaman 3 tahun di industri desain produk.</p>
     </div>
   </body>
@@ -381,15 +493,15 @@ Ternyata di branch `feature/gallery`, Yuswanto juga mengedit `pages/team.html` u
 ```
 
 ```bash
-# Dilakukan oleh Yuswanto di branch feature/gallery
+# Dilakukan oleh Rina di branch feature/gallery
 git add pages/team.html
-git commit -m "feat(team): update Yuswanto description with experience"
+git commit -m "feat(team): update Rina description with experience"
 git push origin feature/gallery
 ```
 
-Ketika PR Yuswanto dicek, terjadi konflik di `pages/team.html` karena kamu dan Yuswanto sama-sama mengubah bagian deskripsi Yuswanto dengan teks yang berbeda, dan kamu sudah menambahkan Budi yang tidak ada di versi Yuswanto.
+Ketika PR Rina dicek, terjadi konflik di `pages/team.html` karena kamu dan Rina sama-sama mengubah bagian deskripsi Rina dengan teks yang berbeda, dan kamu sudah menambahkan Budi yang tidak ada di versi Rina.
 
-**Yuswanto menyelesaikan konflik dari sisi branchnya:**
+**Rina menyelesaikan konflik dari sisi branchnya:**
 
 ```bash
 git checkout feature/gallery
@@ -410,7 +522,7 @@ Git akan menandai konflik di `pages/team.html` seperti ini:
       <p>Spesialisasi di React dan Tailwind CSS.</p>
     </div>
     <div>
-      <h2>Yuswanto — UI/UX Designer</h2>
+      <h2>Rina — UI/UX Designer</h2>
 <<<<<<< HEAD
       <p>Berpengalaman 3 tahun di industri desain produk.</p>
 =======
@@ -425,7 +537,7 @@ Git akan menandai konflik di `pages/team.html` seperti ini:
 </html>
 ```
 
-Yuswanto menyelesaikan konflik secara manual — menggabungkan deskripsinya yang lebih lengkap sekaligus mempertahankan tambahan Budi dari master:
+Rina menyelesaikan konflik secara manual — menggabungkan deskripsinya yang lebih lengkap sekaligus mempertahankan tambahan Budi dari master:
 
 ```html
 <html>
@@ -439,7 +551,7 @@ Yuswanto menyelesaikan konflik secara manual — menggabungkan deskripsinya yang
       <p>Spesialisasi di React dan Tailwind CSS.</p>
     </div>
     <div>
-      <h2>Yuswanto — UI/UX Designer</h2>
+      <h2>Rina — UI/UX Designer</h2>
       <p>Berpengalaman 3 tahun di industri desain produk.</p>
     </div>
     <div>
@@ -456,7 +568,7 @@ git commit -m "fix(team): resolve conflict by merging member descriptions"
 git push origin feature/gallery
 ```
 
-Setelah push, PR Yuswanto sudah tidak konflik lagi dan siap di-merge. Lakukan merge PR di GitHub, lalu hapus branch `feature/gallery`.
+Setelah push, PR Rina sudah tidak konflik lagi dan siap di-merge. Lakukan merge PR di GitHub, lalu hapus branch `feature/gallery`.
 
 ---
 
@@ -470,11 +582,12 @@ Setelah semua skenario selesai, struktur folder project akan terlihat seperti in
 │   ├── 📄blog.html
 │   ├── 📄team.html
 │   ├── 📄gallery.html
-│   └── 📄contact.html
+│   ├── 📄contact.html
+│   └── 📄faq.html
 ├── 📄index.html
 └── 📄.gitignore
 ```
 
 > `draft-notes.txt` tidak masuk ke repository karena sudah di-ignore sejak awal.
 
-# EZ LAH YA TEMEN - TEMEN
+# EZ LAH YA TEMEN-TEMEN
