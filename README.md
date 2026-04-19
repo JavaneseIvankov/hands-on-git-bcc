@@ -65,7 +65,7 @@
 
 9. Commit semuanya:
    ```bash
-   git add .
+   git add .gitignore index.html pages/blog.html pages/team.html
    git commit -m "feat: add .gitignore and pages folder with blog and team placeholders"
    ```
 
@@ -265,7 +265,6 @@ Di sinilah `git stash` berguna.
 6. Sekarang kamu bisa pindah branch dengan aman untuk mengecek sesuatu:
    ```bash
    git checkout feature/blog
-   # ... cek apa yang diminta Yuswanto ...
    git checkout master
    ```
 
@@ -324,15 +323,20 @@ Di sinilah `git stash` berguna.
    ```
    Output akan terlihat seperti:
    ```
-   a1b2c3d feat(team): add team page with first member   ← ingin undo ini
-   e4f5g6h feat(nav): add full navigation links to homepage
-   i7j8k9l feat: add .gitignore and pages folder...
-   m0n1o2p feat: initial commit with homepage skeleton
+   9141c90 (HEAD -> master) feat(faq): add FAQ page with common questions     ← ingin undo ini
+   3154e7d feat(team): add team page with first member
+   ba62862 Merge branch 'feature/blog' : add article in blog.html
+   058689f (feature/blog) feat(blog): add second blog post
+   e7ad63b fix(blog): delete typo in index.html
+   6259e22 feat(nav): add full navigation links to homepage
+   47e52b0 feat(blog): add blog page with first post
+   7c9c406 feat: add .gitignore and pages folder with blog and team placeholders
+   dd5e704 feat: initial commit with homepage skeleton
    ```
 
-3. Reset ke commit sebelum perubahan `team.html` (gunakan hash commit `e4f5g6h` milikmu):
+3. Reset ke commit sebelum perubahan `team.html` (gunakan hash commit <`e4f5g6h`> milikmu):
    ```bash
-   git reset --hard e4f5g6h
+   git reset --hard 9141c90
    ```
 
    > **⚠️ Perhatian:** `git reset --hard` akan menghapus semua perubahan yang belum di-commit secara permanen. Gunakan dengan hati-hati.
@@ -365,6 +369,32 @@ Di sinilah `git stash` berguna.
    ```bash
    git add pages/team.html
    git commit -m "feat(team): add team page with proper member descriptions"
+   ```
+
+   Jangan lupa karena faq.html terhapus maka harus dibuat lagi:
+   Lanjutkan mengisi `faq.html` hingga selesai:
+   ```html
+   <html>
+     <head>
+       <title>FAQ</title>
+     </head>
+     <body>
+       <h1>Pertanyaan Umum</h1>
+       <div>
+         <h2>Apa itu portofolio tim?</h2>
+         <p>Portofolio tim adalah kumpulan karya dan proyek yang pernah dikerjakan bersama.</p>
+       </div>
+       <div>
+         <h2>Bagaimana cara bergabung?</h2>
+         <p>Hubungi kami melalui halaman kontak untuk informasi lebih lanjut.</p>
+       </div>
+     </body>
+   </html>
+   ```
+
+   ```bash
+   git add pages/faq.html
+   git commit -m "feat(faq): add FAQ page with common questions"
    ```
 
 ---
