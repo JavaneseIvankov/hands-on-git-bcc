@@ -1,334 +1,480 @@
-# Git Workshop: Proyek Website Kolaboratif
+# 🛠️ Hands-On: Website Portofolio Tim
+
+**Skenario:** Kamu dan rekanmu (sebut saja "Rina") sedang membangun website portofolio tim bersama. Kamu mengerjakan halaman utama dan blog, sementara Rina mengerjakan halaman tim dan galeri. Di tengah jalan kalian akan mengalami konflik dan harus menyelesaikannya bersama.
+
+---
 
 ## Skenario 1: Inisialisasi Repository
 
-1. Mulailah dengan membuat Git repository di komputer lokal, kemudian buatlah struktur folder berikut:
+1. Buat folder project dan struktur awalnya:
    ```
-   📁project-demo
+   📁portfolio-tim
    📄index.html
    ```
 
-2. Kemudian dari root, jalankan perintah git init pada terminal:
+2. Jalankan `git init` dari dalam folder tersebut:
    ```bash
    git init
    ```
 
-3. Selanjutnya, isi file index.html dengan kode:
+3. Isi `index.html` dengan konten awal:
    ```html
    <html>
      <head>
-       <title>Project Demo</title>
+       <title>Portfolio Tim</title>
      </head>
+     <body>
+       <header>
+         <h1>Portfolio Tim Kami</h1>
+         <nav>
+           <a href="index.html">Home</a>
+         </nav>
+       </header>
+     </body>
+   </html>
+   ```
+
+4. Staging dan commit:
+   ```bash
+   git add .
+   git commit -m "feat: initial commit with homepage skeleton"
+   ```
+
+5. Buat file `draft-notes.txt` — ini adalah catatan pribadi yang tidak perlu di-track:
+   ```bash
+   echo "catatan sementara, jangan di-commit" > draft-notes.txt
+   ```
+
+6. Masukkan ke `.gitignore`:
+   ```bash
+   echo "draft-notes.txt" > .gitignore
+   ```
+
+7. Buat folder `pages` untuk menampung halaman-halaman lain:
+   ```bash
+   mkdir pages
+   ```
+
+8. Buat dua file di dalam folder `pages`: `blog.html` dan `team.html`, isi keduanya dengan struktur HTML kosong terlebih dahulu:
+   ```html
+   <html>
+     <head><title>Placeholder</title></head>
      <body></body>
    </html>
    ```
 
-4. Lakukan commit dengan pesan "Initial commit" setelah melakukan staging:
+9. Commit semuanya:
    ```bash
    git add .
-   git commit -m "feat: initial commit"
+   git commit -m "feat: add .gitignore and pages folder with blog and team placeholders"
    ```
 
-5. Lalu dari root project, buatlah file about.html dan isilah dengan kode:
+---
+
+## Skenario 2: Branching — Kamu Mengerjakan Blog
+
+1. Buat branch untuk fitur blog dan langsung pindah ke sana:
+   ```bash
+   git checkout -b feature/blog
+   ```
+
+2. Isi `pages/blog.html` dengan konten:
    ```html
    <html>
      <head>
-       <title>About Us</title>
-     </head>
-     <body></body>
-   </html>
-   ```
-
-6. Namun, karena file about.html tidak ingin di-commit, masukkan file tersebut ke dalam `.gitignore`:
-   ```bash
-   echo "about.html" > .gitignore
-   ```
-
-7. Buatlah folder baru dalam repository untuk menampung halaman-halaman aplikasi demo ini:
-   ```bash
-   mkdir content
-   ```
-
-8. Di dalam folder content, buatlah dua file: contact.html dan services.html.
-
-9. Lakukan commit yang mencakup file .gitignore dan folder content beserta isinya:
-   ```bash
-   git add .
-   git commit -m "feat: add .gitignore and content folder with contact and services pages"
-   ```
-
-## Skenario 2: Branching
-
-1. Buatlah branch baru dengan nama feature/services, kemudian pindah ke branch tersebut:
-   ```bash
-   git branch feature/services
-   git checkout feature/services
-   ```
-   
-   Alternatif dalam satu perintah:
-   ```bash
-   git checkout -b feature/services
-   ```
-
-2. Tambahkan file pricing.html di dalam folder content.
-   
-   Struktur folder di branch feature/services akan terlihat seperti ini:
-   ```
-   📁project-demo
-   ├── 📁content
-   │   ├── 📄contact.html
-   │   ├── 📄services.html
-   │   └── 📄pricing.html
-   ├── 📄index.html
-   ├── 📄about.html
-   └── 📄.gitignore
-   ```
-
-3. Tambahkan kode berikut pada file pricing.html:
-   ```html
-   <html>
-     <head>
-       <title>Pricing</title>
+       <title>Blog</title>
      </head>
      <body>
-       <div>Service 1: $10</div>
-       <div>Service 2: $20</div>
+       <h1>Blog Tim</h1>
+       <article>
+         <h2>Postingan Pertama</h2>
+         <p>Ini adalah postingan pertama kami.</p>
+       </article>
      </body>
    </html>
    ```
 
-4. Lakukan commit pada file pricing.html:
+3. Commit perubahan:
    ```bash
-   git add content/pricing.html
-   git commit -m "feat: add pricing page with initial services"
+   git add pages/blog.html
+   git commit -m "feat(blog): add blog page with first post"
    ```
 
-## Skenario 3: Bekerja di Branch Utama
+---
 
-1. Kembali ke branch utama (master):
+## Skenario 3: Kembali ke Main — Update Navbar
+
+1. Kembali ke branch `master`:
    ```bash
    git checkout master
    ```
 
-2. Lanjutkan dengan mengerjakan file services.html, dan tambahkan beberapa elemen:
+2. Update `index.html` — tambahkan link navigasi ke semua halaman:
    ```html
    <html>
      <head>
-       <title>Services</title>
+       <title>Portfolio Tim</title>
      </head>
      <body>
-       <div>
-         <h2>Our Services</h2>
-       </div>
-       <div>
-         <ul>
-           <li>Service A</li>
-           <li>Service B</li>
-         </ul>
-       </div>
+       <header>
+         <h1>Portfolio Tim Kami</h1>
+         <nav>
+           <a href="index.html">Home</a>
+           <a href="pages/blog.html">Blog</a>
+           <a href="pages/team.html">Team</a>
+           <a href="pages/gallery.html">Gallery</a>
+         </nav>
+       </header>
+       <main>
+         <p>Selamat datang di website portofolio tim kami.</p>
+       </main>
      </body>
    </html>
    ```
 
-3. Lakukan commit untuk file services.html:
+3. Commit:
    ```bash
-   git add content/services.html
-   git commit -m "feat: update services page with list of services"
+   git add index.html
+   git commit -m "feat(nav): add full navigation links to homepage"
    ```
 
-## Skenario 4: Merge Branch
+---
 
-1. Dari branch master, pindah kembali ke branch feature/services:
+## Skenario 4: Merge Branch Blog
+
+1. Pindah dulu ke branch `feature/blog` untuk menambah satu postingan lagi:
    ```bash
-   git checkout feature/services
+   git checkout feature/blog
    ```
 
-2. Lanjutkan untuk mengerjakan file pricing.html dan tambahkan elemen lain:
+2. Update `pages/blog.html`:
    ```html
    <html>
      <head>
-       <title>Pricing</title>
+       <title>Blog</title>
      </head>
      <body>
-       <div>Service 1: $10</div>
-       <div>Service 2: $20</div>
-       <div>Service 3: $30</div>
+       <h1>Blog Tim</h1>
+       <article>
+         <h2>Postingan Pertama</h2>
+         <p>Ini adalah postingan pertama kami.</p>
+       </article>
+       <article>
+         <h2>Postingan Kedua</h2>
+         <p>Kami terus berkembang dan belajar hal baru.</p>
+       </article>
      </body>
    </html>
    ```
 
-3. Lakukan commit:
+3. Commit:
    ```bash
-   git add content/pricing.html
-   git commit -m "feat: add service 3 to pricing page"
+   git add pages/blog.html
+   git commit -m "feat(blog): add second blog post"
    ```
 
-4. Setelah pekerjaan selesai, gabungkan branch feature/services ke branch master:
+4. Merge ke master:
    ```bash
    git checkout master
-   git merge feature/services
+   git merge feature/blog
    ```
 
-5. Lakukan commit pada perubahan yang terjadi di file contact.html dan tambahkan elemen baru:
-   ```bash
-   # Edit file content/contact.html untuk menambahkan elemen baru
-   git add content/contact.html
-   git commit -m "feat: update contact page with form elements"
+5. Sekarang update `pages/team.html` — isi dengan data anggota tim:
+   ```html
+   <html>
+     <head>
+       <title>Tim Kami</title>
+     </head>
+     <body>
+       <h1>Anggota Tim</h1>
+       <div>
+         <h2>Kamu — Frontend Developer</h2>
+         <p>Bertanggung jawab pada tampilan dan interaksi pengguna.</p>
+       </div>
+     </body>
+   </html>
    ```
+
+   ```bash
+   git add pages/team.html
+   git commit -m "feat(team): add team page with first member"
+   ```
+
+---
 
 ## Skenario 5: Git Reset
 
-1. Setelah melakukan beberapa feature, sadar bahwa beberapa halaman di services.html masih perlu penyesuaian.
+1. Ternyata kamu sadar bahwa deskripsi di `team.html` terlalu umum dan belum sesuai dengan yang diinginkan tim. Kamu ingin kembali ke kondisi sebelum commit tersebut.
 
-2. Karena deadline aplikasi semakin dekat, kita akan bekerja sama dengan partner.
-
-3. Lakukan reset pada commit tertentu dengan perintah berikut untuk menghapus perubahan yang tidak diinginkan:
+2. Cek log untuk menemukan commit target:
    ```bash
-   git reset --hard <commitID_target>
+   git log --oneline
+   ```
+   Output akan terlihat seperti:
+   ```
+   a1b2c3d feat(team): add team page with first member   ← ingin undo ini
+   e4f5g6h feat(nav): add full navigation links to homepage
+   i7j8k9l feat: add .gitignore and pages folder...
+   m0n1o2p feat: initial commit with homepage skeleton
    ```
 
-   > **Catatan**: Ganti `<commitID_target>` dengan ID commit yang ingin Anda kembali. Perintah ini akan menghapus semua perubahan yang belum di-commit, jadi gunakan dengan hati-hati.
+3. Reset ke commit sebelum perubahan `team.html` (gunakan hash commit `e4f5g6h` milikmu):
+   ```bash
+   git reset --hard e4f5g6h
+   ```
+
+   > **⚠️ Perhatian:** `git reset --hard` akan menghapus semua perubahan yang belum di-commit secara permanen. Gunakan dengan hati-hati.
+
+4. Cek log kembali — commit team.html sudah hilang:
+   ```bash
+   git log --oneline
+   ```
+
+5. Isi ulang `pages/team.html` dengan versi yang lebih baik dan commit lagi:
+   ```html
+   <html>
+     <head>
+       <title>Tim Kami</title>
+     </head>
+     <body>
+       <h1>Anggota Tim</h1>
+       <div>
+         <h2>Kamu — Frontend Developer</h2>
+         <p>Spesialisasi di React dan Tailwind CSS.</p>
+       </div>
+       <div>
+         <h2>Rina — UI/UX Designer</h2>
+         <p>Spesialisasi di Figma dan desain sistem.</p>
+       </div>
+     </body>
+   </html>
+   ```
+
+   ```bash
+   git add pages/team.html
+   git commit -m "feat(team): add team page with proper member descriptions"
+   ```
+
+---
 
 ## Skenario 6: Remote Repository
 
-1. Sekarang kita akan menghubungkan repository lokal ke remote repository di GitHub agar teman kerja bisa mengaksesnya:
-```bash
-git remote add origin <remote-repository-url>
-git push -u origin master
-```
+1. Hubungkan repo lokal ke GitHub:
+   ```bash
+   git remote add origin <url-repo-kamu>
+   git push -u origin master
+   ```
 
-2. John akan meng-clone repository dan membuat branch baru bernama feature/landing-page:
-```bash
-git clone <remote-repository-url>
-cd project-demo
-git checkout -b feature/landing-page
-```
+2. Rina meng-clone repo dan membuat branch untuk mengerjakan halaman galeri:
+   ```bash
+   git clone <url-repo-kamu>
+   cd portfolio-tim
+   git checkout -b feature/gallery
+   ```
 
-3. John akan menambahkan kode halaman landing page di file landing.html dan melakukan commit serta push:
-```bash
-# Buat dan edit file landing.html
-git add landing.html
-git commit -m "feat: add landing page"
-git push origin feature/landing-page
-```
+3. Rina membuat file `pages/gallery.html` dan melakukan commit lalu push:
+   ```html
+   <html>
+     <head>
+       <title>Galeri</title>
+     </head>
+     <body>
+       <h1>Galeri Proyek</h1>
+       <div>
+         <h2>Proyek Alpha</h2>
+         <p>Website e-commerce untuk klien pertama kami.</p>
+       </div>
+       <div>
+         <h2>Proyek Beta</h2>
+         <p>Aplikasi dashboard internal perusahaan.</p>
+       </div>
+     </body>
+   </html>
+   ```
 
-4. Setelah itu, John membuat Pull Request dengan judul PR: "feat: Add Landing Page" melalui GitHub.
+   ```bash
+   git add pages/gallery.html
+   git commit -m "feat(gallery): add gallery page with two projects"
+   git push origin feature/gallery
+   ```
 
-## Skenario 7: Menambahkan Fitur Baru
+4. Rina membuat Pull Request di GitHub dengan judul: `feat: add gallery page`.
 
-1. Setelah bekerja di branch master, kita menambahkan halaman faq.html dengan pertanyaan dan jawaban di dalamnya:
-```bash
-# Buat dan edit file faq.html
-git add faq.html
-git commit -m "feat: add FAQ page"
-git push origin master
-```
+---
 
-2. Selain itu, kita juga mengupdate file pricing.html untuk menambahkan lebih banyak layanan:
-```bash# Edit file content/pricing.html untuk menambahkan layanan baru
-# Ubah konten menjadi:
-html<html>
+## Skenario 7: Kamu Menambahkan Fitur Baru di Master
+
+Sementara menunggu PR Rina di-review, kamu melanjutkan pekerjaan di `master`.
+
+1. Tambahkan halaman `pages/contact.html`:
+   ```html
+   <html>
+     <head>
+       <title>Kontak</title>
+     </head>
+     <body>
+       <h1>Hubungi Kami</h1>
+       <p>Email: tim@portfolio.com</p>
+     </body>
+   </html>
+   ```
+
+   ```bash
+   git add pages/contact.html
+   git commit -m "feat(contact): add contact page with email info"
+   git push origin master
+   ```
+
+2. Kamu juga update `pages/team.html` — tambahkan satu anggota baru:
+   ```html
+   <html>
+     <head>
+       <title>Tim Kami</title>
+     </head>
+     <body>
+       <h1>Anggota Tim</h1>
+       <div>
+         <h2>Kamu — Frontend Developer</h2>
+         <p>Spesialisasi di React dan Tailwind CSS.</p>
+       </div>
+       <div>
+         <h2>Rina — UI/UX Designer</h2>
+         <p>Spesialisasi di Figma dan desain sistem.</p>
+       </div>
+       <div>
+         <h2>Budi — Backend Developer</h2>
+         <p>Spesialisasi di Node.js dan PostgreSQL.</p>
+       </div>
+     </body>
+   </html>
+   ```
+
+   ```bash
+   git add pages/team.html
+   git commit -m "feat(team): add Budi as backend developer"
+   git push origin master
+   ```
+
+---
+
+## Skenario 8: Konflik — Rina Juga Edit team.html
+
+Ternyata di branch `feature/gallery`, Rina juga mengedit `pages/team.html` untuk memperbarui deskripsinya sendiri dengan versi yang berbeda:
+
+```html
+<html>
   <head>
-    <title>Pricing</title>
+    <title>Tim Kami</title>
   </head>
   <body>
-    <div>Service 1: $10</div>
-    <div>Service 2: $20</div>
-    <div>Service 3: $30</div>
-    <div>Service 7: $70</div>
-    <div>Service 8: $80</div>
-    <div>Service 9: $90</div>
+    <h1>Anggota Tim</h1>
+    <div>
+      <h2>Kamu — Frontend Developer</h2>
+      <p>Spesialisasi di React dan Tailwind CSS.</p>
+    </div>
+    <div>
+      <h2>Rina — UI/UX Designer</h2>
+      <p>Berpengalaman 3 tahun di industri desain produk.</p>
+    </div>
   </body>
 </html>
 ```
-```bashgit add content/pricing.html
-git commit -m "feat: add more premium services to pricing page"
-git push origin master
+
+```bash
+# Dilakukan oleh Rina di branch feature/gallery
+git add pages/team.html
+git commit -m "feat(team): update Rina description with experience"
+git push origin feature/gallery
 ```
 
-## Skenario 8: Menyelesaikan Konflik
-1. Sementara itu, John telah bekerja di branch feature/landing-page dan juga melakukan perubahan pada file pricing.html:
-```bash
-# John mengedit file content/pricing.html di branchnya
-# Mengubah konten menjadi:
-html<html>
-  <head>
-    <title>Pricing</title>
-  </head>
-  <body>
-    <div>Service 1: $10</div>
-    <div>Service 2: $20</div>
-    <div>Service 3: $30</div>
-    <div>Service 4: $40</div>
-    <div>Service 5: $50</div>
-    <div>Service 6: $60</div>
-  </body>
-</html>
-```
-```bash
-git add content/pricing.html
-git commit -m "feat: add medium-tier services to pricing page"
-git push origin feature/landing-page
-```
+Ketika PR Rina dicek, terjadi konflik di `pages/team.html` karena kamu dan Rina sama-sama mengubah bagian deskripsi Rina dengan teks yang berbeda, dan kamu sudah menambahkan Budi yang tidak ada di versi Rina.
 
-2. John mengonfirmasi bahwa landing page dan perubahan pricing.html sudah selesai dan siap digabungkan.
-3. Namun, setelah check PR, terjadi konflik antara branch master dan feature/landing-page pada file pricing.html.
-4. Untuk menyelesaikan konflik:
+**Rina menyelesaikan konflik dari sisi branchnya:**
+
 ```bash
-git checkout feature/landing-page
+git checkout feature/gallery
 git pull origin master
 ```
 
-5. Git akan menandai konflik di file pricing.html seperti ini:
+Git akan menandai konflik di `pages/team.html` seperti ini:
+
 ```html
 <html>
   <head>
-    <title>Pricing</title>
+    <title>Tim Kami</title>
   </head>
   <body>
-    <div>Service 1: $10</div>
-    <div>Service 2: $20</div>
-    <div>Service 3: $30</div>
+    <h1>Anggota Tim</h1>
+    <div>
+      <h2>Kamu — Frontend Developer</h2>
+      <p>Spesialisasi di React dan Tailwind CSS.</p>
+    </div>
+    <div>
+      <h2>Rina — UI/UX Designer</h2>
 <<<<<<< HEAD
-    <div>Service 4: $40</div>
-    <div>Service 5: $50</div>
-    <div>Service 6: $60</div>
+      <p>Berpengalaman 3 tahun di industri desain produk.</p>
 =======
-    <div>Service 7: $70</div>
-    <div>Service 8: $80</div>
-    <div>Service 9: $90</div>
+      <p>Spesialisasi di Figma dan desain sistem.</p>
+    </div>
+    <div>
+      <h2>Budi — Backend Developer</h2>
+      <p>Spesialisasi di Node.js dan PostgreSQL.</p>
 >>>>>>> master
+    </div>
   </body>
 </html>
 ```
 
-6. Selesaikan konflik dengan menggabungkan kedua perubahan secara manual di editor. Hasilnya seharusnya seperti:
+Rina menyelesaikan konflik secara manual — menggabungkan deskripsinya yang lebih lengkap sekaligus mempertahankan tambahan Budi dari master:
+
 ```html
 <html>
   <head>
-    <title>Pricing</title>
+    <title>Tim Kami</title>
   </head>
   <body>
-    <div>Service 1: $10</div>
-    <div>Service 2: $20</div>
-    <div>Service 3: $30</div>
-    <div>Service 4: $40</div>
-    <div>Service 5: $50</div>
-    <div>Service 6: $60</div>
-    <div>Service 7: $70</div>
-    <div>Service 8: $80</div>
-    <div>Service 9: $90</div>
+    <h1>Anggota Tim</h1>
+    <div>
+      <h2>Kamu — Frontend Developer</h2>
+      <p>Spesialisasi di React dan Tailwind CSS.</p>
+    </div>
+    <div>
+      <h2>Rina — UI/UX Designer</h2>
+      <p>Berpengalaman 3 tahun di industri desain produk.</p>
+    </div>
+    <div>
+      <h2>Budi — Backend Developer</h2>
+      <p>Spesialisasi di Node.js dan PostgreSQL.</p>
+    </div>
   </body>
 </html>
 ```
 
-7. Setelah menyelesaikan konflik:
 ```bash
-git add content/pricing.html
-git commit -m "fix: resolve pricing page conflicts by merging all services"
-git push origin feature/landing-page
+git add pages/team.html
+git commit -m "fix(team): resolve conflict by merging member descriptions"
+git push origin feature/gallery
 ```
 
-8. Setelah berhasil, lakukan merge pull request di GitHub dan hapus branch feature/landing-page.
+Setelah push, PR Rina sudah tidak konflik lagi dan siap di-merge. Lakukan merge PR di GitHub, lalu hapus branch `feature/gallery`.
 
-# GAMPANG LAH YA TEMEN - TEMEN
+---
+
+## Struktur Akhir Project
+
+Setelah semua skenario selesai, struktur folder project akan terlihat seperti ini:
+
+```
+📁portfolio-tim
+├── 📁pages
+│   ├── 📄blog.html
+│   ├── 📄team.html
+│   ├── 📄gallery.html
+│   └── 📄contact.html
+├── 📄index.html
+└── 📄.gitignore
+```
+
+> `draft-notes.txt` tidak masuk ke repository karena sudah di-ignore sejak awal.
+
+# EZ LAH YA TEMEN - TEMEN
