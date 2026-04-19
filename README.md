@@ -65,7 +65,7 @@
 
 9. Commit semuanya:
    ```bash
-   git add .gitignore index.html pages/blog.html pages/team.html
+   git add .
    git commit -m "feat: add .gitignore and pages folder with blog and team placeholders"
    ```
 
