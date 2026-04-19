@@ -324,8 +324,8 @@ Di sinilah `git stash` berguna.
    ```
    Output akan terlihat seperti:
    ```
-   9141c90 (HEAD -> main) feat(faq): add FAQ page with common questions     ← ingin undo ini
-   3154e7d feat(team): add team page with first member
+   9141c90 (HEAD -> main) feat(faq): add FAQ page with common questions     
+   3154e7d feat(team): add team page with first member    ← ingin undo ini
    ba62862 Merge branch 'feature/blog' : add article in blog.html
    058689f (feature/blog) feat(blog): add second blog post
    e7ad63b fix(blog): delete typo in index.html
@@ -335,7 +335,7 @@ Di sinilah `git stash` berguna.
    dd5e704 feat: initial commit with homepage skeleton
    ```
 
-3. Reset ke commit sebelum perubahan `team.html` (gunakan hash commit <`e4f5g6h`> milikmu):
+3. Reset ke commit sebelum perubahan `team.html` (gunakan hash commit <kode hash> milikmu):
    ```bash
    git reset --hard 9141c90
    ```
@@ -373,7 +373,6 @@ Di sinilah `git stash` berguna.
    ```
 
    Jangan lupa karena faq.html terhapus maka harus dibuat lagi:
-   Lanjutkan mengisi `faq.html` hingga selesai:
    ```html
    <html>
      <head>
