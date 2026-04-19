@@ -15,6 +15,7 @@
 2. Jalankan `git init` dari dalam folder tersebut:
    ```bash
    git init
+   git checkout -b main
    ```
 
 3. Isi `index.html` dengan konten awal:
@@ -104,9 +105,9 @@
 
 ## Skenario 3: Kembali ke Main — Update Navbar
 
-1. Kembali ke branch `master`:
+1. Kembali ke branch `main`:
    ```bash
-   git checkout master
+   git checkout main
    ```
 
 2. Update `index.html` — tambahkan link navigasi ke semua halaman:
@@ -173,9 +174,9 @@
    git commit -m "feat(blog): add second blog post"
    ```
 
-4. Merge ke master:
+4. Merge ke main:
    ```bash
-   git checkout master
+   git checkout main
    git merge feature/blog
    ```
 
@@ -204,7 +205,7 @@
 
 ## Skenario 5: Git Stash — Simpan Pekerjaan Sementara
 
-Setelah merge branch blog, kamu mulai mengerjakan halaman `pages/faq.html` di `master`. Kamu sudah menulis setengah konten, tapi tiba-tiba Yuswanto menghubungi dan meminta kamu untuk cepat mengecek sesuatu di branch `feature/blog` yang sudah di-merge tadi. Pekerjaan `faq.html` belum layak di-commit, tapi kamu juga tidak mau kehilangan progress yang sudah ada.
+Setelah merge branch blog, kamu mulai mengerjakan halaman `pages/faq.html` di `main`. Kamu sudah menulis setengah konten, tapi tiba-tiba Yuswanto menghubungi dan meminta kamu untuk cepat mengecek sesuatu di branch `feature/blog` yang sudah di-merge tadi. Pekerjaan `faq.html` belum layak di-commit, tapi kamu juga tidak mau kehilangan progress yang sudah ada.
 
 Di sinilah `git stash` berguna.
 
@@ -231,7 +232,7 @@ Di sinilah `git stash` berguna.
    ```
    Output:
    ```
-   On branch master
+   On branch main
    Untracked files:
      pages/faq.html
    ```
@@ -249,7 +250,7 @@ Di sinilah `git stash` berguna.
    ```
    Output:
    ```
-   On branch master
+   On branch main
    nothing to commit, working tree clean
    ```
 
@@ -259,13 +260,13 @@ Di sinilah `git stash` berguna.
    ```
    Output:
    ```
-   stash@{0}: WIP on master: 3154e7d feat(team): add team page with first member
+   stash@{0}: WIP on main: 3154e7d feat(team): add team page with first member
    ```
 
 6. Sekarang kamu bisa pindah branch dengan aman untuk mengecek sesuatu:
    ```bash
    git checkout feature/blog
-   git checkout master
+   git checkout main
    ```
 
 7. Setelah selesai, ambil kembali pekerjaan yang tadi disimpan:
@@ -281,7 +282,7 @@ Di sinilah `git stash` berguna.
    ```
    Output:
    ```
-   On branch master
+   On branch main
    Untracked files:
      pages/faq.html
    ```
@@ -323,7 +324,7 @@ Di sinilah `git stash` berguna.
    ```
    Output akan terlihat seperti:
    ```
-   9141c90 (HEAD -> master) feat(faq): add FAQ page with common questions     ← ingin undo ini
+   9141c90 (HEAD -> main) feat(faq): add FAQ page with common questions     ← ingin undo ini
    3154e7d feat(team): add team page with first member
    ba62862 Merge branch 'feature/blog' : add article in blog.html
    058689f (feature/blog) feat(blog): add second blog post
@@ -404,7 +405,7 @@ Di sinilah `git stash` berguna.
 1. Hubungkan repo lokal ke GitHub:
    ```bash
    git remote add origin <url-repo-kamu>
-   git push -u origin master
+   git push -u origin main
    ```
 
 2. Yuswanto meng-clone repo dan membuat branch untuk mengerjakan halaman galeri:
@@ -444,9 +445,9 @@ Di sinilah `git stash` berguna.
 
 ---
 
-## Skenario 8: Kamu Menambahkan Fitur Baru di Master
+## Skenario 8: Kamu Menambahkan Fitur Baru di main
 
-Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`.
+Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `main`.
 
 1. Tambahkan halaman `pages/contact.html`:
    ```html
@@ -464,7 +465,7 @@ Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`
    ```bash
    git add pages/contact.html
    git commit -m "feat(contact): add contact page with email info"
-   git push origin master
+   git push origin main
    ```
 
 2. Kamu juga update `pages/team.html` — tambahkan satu anggota baru:
@@ -494,7 +495,7 @@ Sementara menunggu PR Yuswanto di-review, kamu melanjutkan pekerjaan di `master`
    ```bash
    git add pages/team.html
    git commit -m "feat(team): add Budi as backend developer"
-   git push origin master
+   git push origin main
    ```
 
 ---
@@ -535,7 +536,7 @@ Ketika PR Yuswanto dicek, terjadi konflik di `pages/team.html` karena kamu dan Y
 
 ```bash
 git checkout feature/gallery
-git pull origin master
+git pull origin main
 ```
 
 Git akan menandai konflik di `pages/team.html` seperti ini:
@@ -561,13 +562,13 @@ Git akan menandai konflik di `pages/team.html` seperti ini:
     <div>
       <h2>Budi — Backend Developer</h2>
       <p>Spesialisasi di Node.js dan PostgreSQL.</p>
->>>>>>> master
+>>>>>>> main
     </div>
   </body>
 </html>
 ```
 
-Yuswanto menyelesaikan konflik secara manual — menggabungkan deskripsinya yang lebih lengkap sekaligus mempertahankan tambahan Budi dari master:
+Yuswanto menyelesaikan konflik secara manual — menggabungkan deskripsinya yang lebih lengkap sekaligus mempertahankan tambahan Budi dari main:
 
 ```html
 <html>
